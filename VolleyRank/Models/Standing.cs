@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace VolleyRank.Models
@@ -10,6 +11,8 @@ namespace VolleyRank.Models
     {
         [XmlArray("klassement")]
         [XmlArrayItem("rangschikking", typeof(Ranking))]
-        public Ranking[] Rankings { get; set; }
+        public Ranking[] RankingsArray { get; set; }
+
+        public IList<Ranking> Rankings => RankingsArray.ToList();
     }
 }

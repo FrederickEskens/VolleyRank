@@ -15,9 +15,11 @@ namespace VolleyRank
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
-            var stream = Assets.Open("testdata.xml");
+            //var stream = Assets.Open("testdata.xml");
+            //var result = XmlDeserializer.DeserialzeStanding(stream);
 
-            var result = XmlDeserializer.DeserialzeStanding(stream);
+            var result = DataImport.GetStandingFromLeague("H1GH");
+
         }
     }
 }

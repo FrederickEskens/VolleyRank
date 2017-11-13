@@ -17,5 +17,18 @@ namespace VolleyRank.Utilities
 
             return result;
         }
+
+        public static Standing DeserialzeStanding(string input)
+        {
+            var serializer = new XmlSerializer(typeof(Standing));
+
+            Standing result;
+            using (TextReader reader = new StringReader(input))
+            {
+                result = (Standing)serializer.Deserialize(reader);
+            }
+
+            return result;
+        }
     }
 }
