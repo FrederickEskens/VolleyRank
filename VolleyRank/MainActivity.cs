@@ -1,6 +1,7 @@
 ﻿using Android.App;
-using Android.Widget;
 using Android.OS;
+
+using VolleyRank.Utilities;
 
 namespace VolleyRank
 {
@@ -13,6 +14,10 @@ namespace VolleyRank
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+
+            var stream = Assets.Open("testdata.xml");
+
+            var result = XmlDeserializer.DeserialzeStanding(stream);
         }
     }
 }
