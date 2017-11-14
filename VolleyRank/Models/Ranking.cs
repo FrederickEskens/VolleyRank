@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Xml.Serialization;
+using Java.Util;
+using VolleyRank.Utilities;
 
 namespace VolleyRank.Models
 {
@@ -47,5 +52,25 @@ namespace VolleyRank.Models
 
         [XmlElement("forfait")]
         public int Forfait { get; set; }
+
+        public IList<string> ExtraInfo
+        {
+            get
+            {
+                var list = new List<string>
+                {
+                    $"Gespeelde wedstrijden_{GamesPlayed}",
+                    $"Gewonnen wedstrijden 3-0/3-1_{GamesWonFull}",
+                    $"Gewonnen wedstrijden 3-2_{GamesWonHalf}",
+                    $"Verloren wedstrijden 3-0/3-1_{GamesLostFull}",
+                    $"Verloren wedstrijden 3-2_{GamesLostHalf}",
+                    $"Sets gewonnen_{SetsWon}",
+                    $"Sets verloren_{SetsLost}",
+                    $"Forfaits_{Forfait}",
+                };
+
+                return list;
+            }
+        }
     }
 }
