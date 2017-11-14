@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <item name="volleyrank_primary" type="color">#236863</item>
+  <item name="volleyrank_primarydark" type="color">#063431</item>
+</resources>

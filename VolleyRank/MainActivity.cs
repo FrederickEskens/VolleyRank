@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
+
 using Android.App;
 using Android.OS;
 using Android.Support.V4.Widget;
@@ -13,11 +12,11 @@ using VolleyRank.Utilities;
 namespace VolleyRank
 {
     [Activity(Label = "VolleyRank", MainLauncher = true)]
-    public class MainActivity : Activity, SwipeRefreshLayout.IOnRefreshListener
+    public class MainActivity : Activity
     {
-        ExpandableListAdapter rankingAdapter;
-        ExpandableListView rankingListView;
-        List<Ranking> profielen;
+        private ExpandableListAdapter rankingAdapter;
+        private ExpandableListView rankingListView;
+
         private SwipeRefreshLayout swipeLayout;
         private Standing data;
 
@@ -25,7 +24,6 @@ namespace VolleyRank
         {
             base.OnCreate(savedInstanceState);
 
-            // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
             //var stream = Assets.Open("testdata.xml");
@@ -38,21 +36,13 @@ namespace VolleyRank
             rankingListView.SetAdapter(rankingAdapter);
 
             swipeLayout = FindViewById<SwipeRefreshLayout>(Resource.Id.swipe_container);
-            swipeLayout.SetOnRefreshListener(this);
+            swipeLayout.SetColorSchemeColors(Resource.Color.volleyrank_primary, Resource.Color.volleyrank_primarydark);
+            swipeLayout.Refresh += HandleRefresh;
         }
 
-        public void OnRefresh()
+        private async void HandleRefresh(object sender, EventArgs e)
         {
-            //TODO: look into animation (when slower)
-            swipeLayout.Refreshing = true;
-
-            Task.Factory.StartNew(() =>
-            {
-                data = DataImport.GetStandingFromLeague("H1GH");
-                rankingAdapter.UpdateData(data.Rankings);
-                rankingAdapter.NotifyDataSetChanged();
-            });
-
+            data = await DataImport.GetStandingFromLeagueAsync("H1GH");
             swipeLayout.Refreshing = false;
         }
     }

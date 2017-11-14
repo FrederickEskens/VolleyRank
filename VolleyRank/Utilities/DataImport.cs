@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net.Http;
-
+using System.Threading.Tasks;
 using VolleyRank.Models;
 
 namespace VolleyRank.Utilities
@@ -15,6 +15,20 @@ namespace VolleyRank.Utilities
             {
                 httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
                 var response = httpClient.GetStringAsync(new Uri(url)).Result;
+                var xml = SanitizeXml(response);
+
+                return XmlDeserializer.DeserialzeStanding(xml);
+            }
+        }
+
+        public static async Task<Standing> GetStandingFromLeagueAsync(string league)
+        {
+            var url = $"https://www.volleyadmin2.be/services/rangschikking_xml.php?province_id=1&reeks={league}&wedstrijd=Hoofd";
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
+                var response = await httpClient.GetStringAsync(new Uri(url));
                 var xml = SanitizeXml(response);
 
                 return XmlDeserializer.DeserialzeStanding(xml);
