@@ -2,5 +2,12 @@
   <style name="AppTheme" parent="android:Theme.Material.Light">
     <item name="android:colorPrimary">@color/volleyrank_primary</item>
     <item name="android:colorPrimaryDark">@color/volleyrank_primarydark</item>
+    <item name="android:actionBarStyle">@style/MyActionBarMaterial</item>
+  </style>
+
+  <style name="MyActionBarMaterial" parent="AppTheme">
+    <item name="android:background">@color/volleyrank_primary</item>
+    <item name="android:textColorPrimary">@android:color/white</item>
+    <item name="android:textColorSecondary">@android:color/white</item>
   </style>
 </resources>

@@ -2370,6 +2370,9 @@ namespace VolleyRank
 			// aapt resource value: 0x7f0800a2
 			public const int Animation_AppCompat_DropDownUp = 2131230882;
 			
+			// aapt resource value: 0x7f080160
+			public const int AppBaseThemeNoAction = 2131231072;
+			
 			// aapt resource value: 0x7f08015f
 			public const int AppTheme = 2131231071;
 			
@@ -2828,6 +2831,15 @@ namespace VolleyRank
 			
 			// aapt resource value: 0x7f080084
 			public const int Base_Widget_AppCompat_Toolbar_Button_Navigation = 2131230852;
+			
+			// aapt resource value: 0x7f080161
+			public const int ColoredButton = 2131231073;
+			
+			// aapt resource value: 0x7f080162
+			public const int MyActionBar = 2131231074;
+			
+			// aapt resource value: 0x7f080163
+			public const int MyActionBarMaterial = 2131231075;
 			
 			// aapt resource value: 0x7f08001e
 			public const int Platform_AppCompat = 2131230750;

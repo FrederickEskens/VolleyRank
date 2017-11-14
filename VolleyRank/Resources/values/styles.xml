@@ -2,5 +2,21 @@
   <style name="AppTheme" parent="Theme.AppCompat.Light">
     <item name="colorPrimary">@color/volleyrank_primary</item>
     <item name="colorPrimaryDark">@color/volleyrank_primarydark</item>
+    <item name="actionBarStyle">@style/MyActionBar</item>
+  </style>
+
+  <style name="AppBaseThemeNoAction" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/volleyrank_primary</item>
+    <item name="buttonStyle">@style/ColoredButton</item>
+    <item name="colorAccent">@color/volleyrank_primary</item>
+  </style>
+
+  <style name="ColoredButton" parent="Base.Widget.AppCompat.Button.Colored">
+    <item name="colorButtonNormal">@color/volleyrank_primary</item>
+    <item name="android:textColor">@android:color/white</item>
+  </style>
+  
+  <style name="MyActionBar" parent="AppTheme">
+    <item name="background">@color/volleyrank_primary</item>
   </style>
 </resources>
