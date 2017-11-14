@@ -20,6 +20,11 @@ namespace VolleyRank.Adapters
             this.rankingList = rankingList;
         }
 
+        public void UpdateData(IList<Ranking> rankingList)
+        {
+            this.rankingList = rankingList;
+        }
+
         public override Object GetChild(int groupPosition, int childPosition)
         {
             return rankingList[groupPosition].ExtraInfo[childPosition];
