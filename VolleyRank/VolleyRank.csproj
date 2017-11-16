@@ -118,7 +118,7 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\DataImport.cs" />
-    <Compile Include="Utilities\StringExtensions.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\XmlConvert.cs" />
   </ItemGroup>
   <ItemGroup>

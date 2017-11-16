@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -36,17 +37,16 @@ namespace VolleyRank.Utilities
                 var response = await httpClient.GetStringAsync(new Uri(url));
                 var xml = SanitizeXml(response);
 
-                var database = new VolleyRankDatabase();
-                database.StoreStandingInCache("standing_H1GH", xml);
-
                 return XmlConvert.DeserialzeStanding(xml);
             }
         }
 
-        public static Standing GetStandingFromCache(string league)
+        public static Standing GetStandingFromCache(string league, out DateTime timeStamp)
         {
             var database = new VolleyRankDatabase();
-            var xml = database.GetStandingFromCache($"standing_{league}").Xml;
+            var cacheItem = database.GetStandingFromCache($"standing_{league}");
+            var xml = cacheItem.Xml;
+            timeStamp = DateTime.Parse(cacheItem.TimeStamp, CultureInfo.InvariantCulture);
 
             return XmlConvert.DeserialzeStanding(xml);
         }
@@ -54,6 +54,7 @@ namespace VolleyRank.Utilities
         private static string SanitizeXml(string xml)
         {
             xml = xml.Replace("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>", "");
+
             return WrapInRootTag(xml);
         }
 

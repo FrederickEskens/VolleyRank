@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
+
 using Android.App;
 
 using SQLite;
@@ -41,12 +42,18 @@ namespace VolleyRank.Database
 
         public void StoreStandingInCache(string key, string xml)
         {
-            var timestamp = DateTime.Now;
+            var timestamp = DateTime.Now.ToString(CultureInfo.InvariantCulture);
 
             using (var conn = new SQLiteConnection(dbPath))
             {
+                if (GetStandingFromCache(key) == null)
+                {
+                    conn.Query<CacheItem>(
+                        $"insert into cache (key, xml, timestamp) values ('{key}', '{xml}', '{timestamp}')");
+                }
+
                 conn.Query<CacheItem>(
-                    $"insert into cache (key, xml, timestamp) values ('{key}', '{xml}', '{timestamp.ToString(CultureInfo.InvariantCulture)}')");
+                    $"update cache set xml='{xml}', timestamp='{timestamp}' where key='{key}'");
             }
         }
 
