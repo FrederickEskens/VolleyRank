@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+
+using VolleyRank.Database;
 using VolleyRank.Models;
 
 namespace VolleyRank.Utilities
 {
     public static class DataImport
     {
-        public static Standing GetStandingFromLeague(string league)
+        public static Standing GetStandingFromWebService(string league)
         {
             var url = $"https://www.volleyadmin2.be/services/rangschikking_xml.php?province_id=1&reeks={league}&wedstrijd=Hoofd";
             
@@ -17,11 +19,14 @@ namespace VolleyRank.Utilities
                 var response = httpClient.GetStringAsync(new Uri(url)).Result;
                 var xml = SanitizeXml(response);
 
-                return XmlDeserializer.DeserialzeStanding(xml);
+                var database = new VolleyRankDatabase();
+                database.StoreStandingInCache("standing_H1GH", xml);
+
+                return XmlConvert.DeserialzeStanding(xml);
             }
         }
 
-        public static async Task<Standing> GetStandingFromLeagueAsync(string league)
+        public static async Task<Standing> GetStandingFromWebServiceAsync(string league)
         {
             var url = $"https://www.volleyadmin2.be/services/rangschikking_xml.php?province_id=1&reeks={league}&wedstrijd=Hoofd";
 
@@ -31,8 +36,19 @@ namespace VolleyRank.Utilities
                 var response = await httpClient.GetStringAsync(new Uri(url));
                 var xml = SanitizeXml(response);
 
-                return XmlDeserializer.DeserialzeStanding(xml);
+                var database = new VolleyRankDatabase();
+                database.StoreStandingInCache("standing_H1GH", xml);
+
+                return XmlConvert.DeserialzeStanding(xml);
             }
+        }
+
+        public static Standing GetStandingFromCache(string league)
+        {
+            var database = new VolleyRankDatabase();
+            var xml = database.GetStandingFromCache($"standing_{league}").Xml;
+
+            return XmlConvert.DeserialzeStanding(xml);
         }
 
         private static string SanitizeXml(string xml)

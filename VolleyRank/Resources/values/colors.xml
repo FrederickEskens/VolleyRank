@@ -2,4 +2,5 @@
 <resources>
   <item name="volleyrank_primary" type="color">#236863</item>
   <item name="volleyrank_primarydark" type="color">#063431</item>
+  <item name="volleyrank_primarylight" type="color">#559D98</item>
 </resources>

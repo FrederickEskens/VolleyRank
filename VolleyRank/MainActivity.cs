@@ -6,6 +6,7 @@ using Android.Support.V4.Widget;
 using Android.Widget;
 
 using VolleyRank.Adapters;
+using VolleyRank.Database;
 using VolleyRank.Models;
 using VolleyRank.Utilities;
 
@@ -20,20 +21,26 @@ namespace VolleyRank
         private SwipeRefreshLayout swipeLayout;
         private Standing data;
 
+        private VolleyRankDatabase db;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.Main);
 
+            db = new VolleyRankDatabase();
+
             //var stream = Assets.Open("testdata.xml");
-            //var result = XmlDeserializer.DeserialzeStanding(stream);
+            //var result = XmlConvert.DeserialzeStanding(stream);
 
-            data = DataImport.GetStandingFromLeague("H1GH");
-
+            //data = DataImport.GetStandingFromWebService("H1GH");
+            data = DataImport.GetStandingFromCache("H1GH");
+                
             rankingAdapter = new ExpandableListAdapter(this, data.Rankings);
             rankingListView = FindViewById<ExpandableListView>(Resource.Id.ranking_list);
             rankingListView.SetAdapter(rankingAdapter);
+            //rankingListView.SetChildDivider();
 
             swipeLayout = FindViewById<SwipeRefreshLayout>(Resource.Id.swipe_container);
             swipeLayout.SetColorSchemeColors(Resource.Color.volleyrank_primary, Resource.Color.volleyrank_primarydark);
@@ -42,7 +49,7 @@ namespace VolleyRank
 
         private async void HandleRefresh(object sender, EventArgs e)
         {
-            data = await DataImport.GetStandingFromLeagueAsync("H1GH");
+            data = await DataImport.GetStandingFromWebServiceAsync("H1GH");
             swipeLayout.Refreshing = false;
         }
     }

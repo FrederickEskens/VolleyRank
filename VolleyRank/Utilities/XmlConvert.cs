@@ -1,11 +1,12 @@
 ﻿using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
 
 using VolleyRank.Models;
 
 namespace VolleyRank.Utilities
 {
-    public static class XmlDeserializer
+    public static class XmlConvert
     {
         public static Standing DeserialzeStanding(Stream stream)
         {
@@ -29,6 +30,24 @@ namespace VolleyRank.Utilities
             }
 
             return result;
+        }
+
+        public static string SerializeStanding(Standing standing)
+        {
+            var serializer = new XmlSerializer(typeof(Standing));
+
+            string xml;
+
+            using (var sw = new StringWriter())
+            {
+                using (var writer = XmlWriter.Create(sw))
+                {
+                    serializer.Serialize(writer, standing);
+                    xml = sw.ToString();
+                }
+            }
+
+            return xml;
         }
     }
 }
