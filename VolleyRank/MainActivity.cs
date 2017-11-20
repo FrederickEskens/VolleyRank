@@ -56,7 +56,7 @@ namespace VolleyRank
             var networkInfo = connectivityManager.ActiveNetworkInfo;
             Standing result;
 
-            if (networkInfo == null || !networkInfo.IsConnected)
+            if (networkInfo == null || !networkInfo.IsConnected || NetworkUtilities.GetNetworkType(ApplicationContext) == "2G")
             {
                 result = GetStandingFromCache(league);
             }
@@ -73,7 +73,7 @@ namespace VolleyRank
             var networkInfo = connectivityManager.ActiveNetworkInfo;
             Standing result;
 
-            if (networkInfo == null || !networkInfo.IsConnected)
+            if (networkInfo == null || !networkInfo.IsConnected || NetworkUtilities.GetNetworkType(ApplicationContext) == "2G")
             {
                 result = GetStandingFromCache(league);
             }
@@ -96,4 +96,3 @@ namespace VolleyRank
         }
     }
 }
-
