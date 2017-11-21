@@ -21,7 +21,7 @@ namespace VolleyRank.Utilities
                 var xml = SanitizeXml(response);
 
                 var database = new VolleyRankDatabase();
-                database.StoreStandingInCache("standing_H1GH", xml);
+                database.StoreStandingInCache($"standing_{league}", xml);
 
                 return XmlConvert.DeserialzeStanding(xml);
             }

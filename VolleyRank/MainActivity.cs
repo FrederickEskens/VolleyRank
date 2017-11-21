@@ -20,6 +20,7 @@ namespace VolleyRank
         private ExpandableListView rankingListView;
 
         private SwipeRefreshLayout swipeLayout;
+
         private Standing data;
 
         private ConnectivityManager connectivityManager;
@@ -56,9 +57,13 @@ namespace VolleyRank
             var networkInfo = connectivityManager.ActiveNetworkInfo;
             Standing result;
 
-            if (networkInfo == null || !networkInfo.IsConnected || NetworkUtilities.GetNetworkType(ApplicationContext) == "2G")
+            if (networkInfo == null || !networkInfo.IsConnected)
             {
-                result = GetStandingFromCache(league);
+                result = GetStandingFromCache(league, "Geen verbinding");
+            }
+            else if (NetworkUtilities.GetNetworkType(ApplicationContext) == "2G")
+            {
+                result = GetStandingFromCache(league, "Slechte verbinding");
             }
             else
             {
@@ -73,9 +78,13 @@ namespace VolleyRank
             var networkInfo = connectivityManager.ActiveNetworkInfo;
             Standing result;
 
-            if (networkInfo == null || !networkInfo.IsConnected || NetworkUtilities.GetNetworkType(ApplicationContext) == "2G")
+            if (networkInfo == null || !networkInfo.IsConnected)
             {
-                result = GetStandingFromCache(league);
+                result = GetStandingFromCache(league, "Geen verbinding");
+            }
+            else if (NetworkUtilities.GetNetworkType(ApplicationContext) == "2G")
+            {
+                result = GetStandingFromCache(league, "Slechte verbinding");
             }
             else
             {
@@ -85,11 +94,11 @@ namespace VolleyRank
             return result;
         }
 
-        private Standing GetStandingFromCache(string league)
+        private Standing GetStandingFromCache(string league, string message)
         {
             var result = DataImport.GetStandingFromCache(league, out var timeStamp);
             var age = DateTime.Now - timeStamp;
-            toast.SetText($"Geen verbinding. Laatste data van {age.ToTimeString()} geleden.");
+            toast.SetText($"{message}. Laatste data van {age.ToTimeString()} geleden.");
             toast.Show();
 
             return result;
