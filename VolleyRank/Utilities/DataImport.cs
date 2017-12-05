@@ -17,6 +17,7 @@ namespace VolleyRank.Utilities
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
+                httpClient.Timeout = TimeSpan.FromSeconds(5);
                 var response = httpClient.GetStringAsync(new Uri(url)).Result;
                 var xml = SanitizeXml(response);
 
@@ -34,6 +35,7 @@ namespace VolleyRank.Utilities
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
+                httpClient.Timeout = TimeSpan.FromSeconds(5);
                 var response = await httpClient.GetStringAsync(new Uri(url));
                 var xml = SanitizeXml(response);
 

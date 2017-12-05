@@ -119,7 +119,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\DataImport.cs" />
     <Compile Include="Utilities\Extensions.cs" />
-    <Compile Include="Utilities\NetworkUtilities.cs" />
     <Compile Include="Utilities\XmlConvert.cs" />
   </ItemGroup>
   <ItemGroup>

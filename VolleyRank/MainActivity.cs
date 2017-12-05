@@ -61,13 +61,16 @@ namespace VolleyRank
             {
                 result = GetStandingFromCache(league, "Geen verbinding");
             }
-            else if (NetworkUtilities.GetNetworkType(ApplicationContext) == "2G")
-            {
-                result = GetStandingFromCache(league, "Slechte verbinding");
-            }
             else
             {
-                result = DataImport.GetStandingFromWebService(league);
+                try
+                {
+                    result = DataImport.GetStandingFromWebService(league);
+                }
+                catch (Exception)
+                {
+                    result = GetStandingFromCache(league, "Slechte verbinding");
+                }
             }
 
             return result;
@@ -82,13 +85,16 @@ namespace VolleyRank
             {
                 result = GetStandingFromCache(league, "Geen verbinding");
             }
-            else if (NetworkUtilities.GetNetworkType(ApplicationContext) == "2G")
-            {
-                result = GetStandingFromCache(league, "Slechte verbinding");
-            }
             else
             {
-                result = await DataImport.GetStandingFromWebServiceAsync("H1GH");
+                try
+                {
+                    result = await DataImport.GetStandingFromWebServiceAsync(league);
+                }
+                catch (Exception)
+                {
+                    result = GetStandingFromCache(league, "Slechte verbinding");
+                }
             }
 
             return result;
