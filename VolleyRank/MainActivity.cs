@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 using Android.App;
+using Android.Content;
 using Android.Net;
 using Android.OS;
-using Android.Support.V4.Widget;
 using Android.Widget;
 
-using VolleyRank.Adapters;
+using VolleyRank.Database;
 using VolleyRank.Models;
 using VolleyRank.Utilities;
 
@@ -16,98 +17,84 @@ namespace VolleyRank
     [Activity(Label = "VolleyRank", MainLauncher = true)]
     public class MainActivity : Activity
     {
-        private ExpandableListAdapter rankingAdapter;
-        private ExpandableListView rankingListView;
-
-        private SwipeRefreshLayout swipeLayout;
-
-        private Standing data;
+        private string selectedSerieCode;
+        private IList<string> seriesNames;
+        private IList<Serie> series;
+        private VolleyRankDatabase database;
 
         private ConnectivityManager connectivityManager;
 
-        private Toast toast;
-            
+        private Spinner spinner;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.Main);
-            connectivityManager = (ConnectivityManager) GetSystemService(ConnectivityService);
-            toast = Toast.MakeText(this, "", ToastLength.Long);
+            connectivityManager = (ConnectivityManager)GetSystemService(ConnectivityService);
+            database = new VolleyRankDatabase();
 
-            data = GetStanding("H1GH");
+            spinner = FindViewById<Spinner>(Resource.Id.spinner);
 
-            rankingAdapter = new ExpandableListAdapter(this, data.Rankings);
-            rankingListView = FindViewById<ExpandableListView>(Resource.Id.ranking_list);
-            rankingListView.SetAdapter(rankingAdapter);
+            var button = FindViewById<Button>(Resource.Id.button);
 
-            swipeLayout = FindViewById<SwipeRefreshLayout>(Resource.Id.swipe_container);
-            swipeLayout.SetColorSchemeColors(Resource.Color.volleyrank_primary, Resource.Color.volleyrank_primarydark);
-            swipeLayout.Refresh += HandleRefresh;
+            button.Click += (o, e) => {
+                var activity2 = new Intent(this, typeof(RankingActivity));
+                activity2.PutExtra("seriesCode", selectedSerieCode);
+                StartActivity(activity2);
+            };
+
+            series = GetSeries("AH-2180").SerieList.Where(x => x.Type == "punten").ToList();
+            seriesNames = series.OrderBy(x => x.Name).Select(x => x.Name).ToList();
+            SetPreselectedSerie();
+
+            var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, seriesNames);
+            spinner.Adapter = adapter;
+
+            spinner.ItemSelected += spinner_ItemSelected;
         }
 
-        private async void HandleRefresh(object sender, EventArgs e)
+        private void SetPreselectedSerie()
         {
-            data = await GetStandingAsync("H1GH");
-            swipeLayout.Refreshing = false;
+            var lastSelectedSerie = database.GetPreference("last_selected_serie");
+
+            if (!string.IsNullOrEmpty(lastSelectedSerie))
+            {
+                var serie = series.FirstOrDefault(x => x.Code == lastSelectedSerie)?.Name;
+                var index = seriesNames.IndexOf(serie);
+                spinner.SetSelection(index);
+            }
         }
 
-        private Standing GetStanding(string league)
+        private Series GetSeries(string clubId)
         {
             var networkInfo = connectivityManager.ActiveNetworkInfo;
-            Standing result;
+            Series result;
 
             if (networkInfo == null || !networkInfo.IsConnected)
             {
-                result = GetStandingFromCache(league, "Geen verbinding");
+                result = DataImport.GetSeriesFromCache(clubId, out var timeStamp);
             }
             else
             {
                 try
                 {
-                    result = DataImport.GetStandingFromWebService(league);
+                    result = DataImport.GetSeriesFromWebService(clubId);
                 }
                 catch (Exception)
                 {
-                    result = GetStandingFromCache(league, "Slechte verbinding");
+                    result = DataImport.GetSeriesFromCache(clubId, out var timeStamp);
                 }
             }
 
             return result;
         }
 
-        private async Task<Standing> GetStandingAsync(string league)
+        private void spinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {
-            var networkInfo = connectivityManager.ActiveNetworkInfo;
-            Standing result;
-
-            if (networkInfo == null || !networkInfo.IsConnected)
-            {
-                result = GetStandingFromCache(league, "Geen verbinding");
-            }
-            else
-            {
-                try
-                {
-                    result = await DataImport.GetStandingFromWebServiceAsync(league);
-                }
-                catch (Exception)
-                {
-                    result = GetStandingFromCache(league, "Slechte verbinding");
-                }
-            }
-
-            return result;
-        }
-
-        private Standing GetStandingFromCache(string league, string message)
-        {
-            var result = DataImport.GetStandingFromCache(league, out var timeStamp);
-            var age = DateTime.Now - timeStamp;
-            toast.SetText($"{message}. Laatste data van {age.ToTimeString()} geleden.");
-            toast.Show();
-
-            return result;
+            var selectedSerie = series.FirstOrDefault(x => x.Name == seriesNames[e.Position]);
+            selectedSerieCode = selectedSerie?.Code;
+            database.SavePreference("last_selected_serie", selectedSerieCode);
         }
     }
 }

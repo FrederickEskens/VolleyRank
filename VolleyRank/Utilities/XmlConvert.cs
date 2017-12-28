@@ -2,39 +2,37 @@
 using System.Xml;
 using System.Xml.Serialization;
 
-using VolleyRank.Models;
-
 namespace VolleyRank.Utilities
 {
     public static class XmlConvert
     {
-        public static Standing DeserialzeStanding(Stream stream)
+        public static T Deserialze<T>(Stream stream)
         {
-            var serializer = new XmlSerializer(typeof(Standing));
+            var serializer = new XmlSerializer(typeof(T));
             var reader = new StreamReader(stream);
 
-            var result = (Standing)serializer.Deserialize(reader);
+            var result = (T)serializer.Deserialize(reader);
             reader.Close();
 
             return result;
         }
 
-        public static Standing DeserialzeStanding(string input)
+        public static T Deserialze<T>(string input)
         {
-            var serializer = new XmlSerializer(typeof(Standing));
+            var serializer = new XmlSerializer(typeof(T));
 
-            Standing result;
+            T result;
             using (TextReader reader = new StringReader(input))
             {
-                result = (Standing)serializer.Deserialize(reader);
+                result = (T)serializer.Deserialize(reader);
             }
 
             return result;
         }
 
-        public static string SerializeStanding(Standing standing)
+        public static string Serialize<T>(T standing)
         {
-            var serializer = new XmlSerializer(typeof(Standing));
+            var serializer = new XmlSerializer(typeof(T));
 
             string xml;
 

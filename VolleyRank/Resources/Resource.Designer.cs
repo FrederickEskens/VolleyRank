@@ -1633,40 +1633,43 @@ namespace VolleyRank
 			public const int abc_vector_test = 2130837586;
 			
 			// aapt resource value: 0x7f020053
-			public const int notification_action_background = 2130837587;
+			public const int custom_button = 2130837587;
 			
 			// aapt resource value: 0x7f020054
-			public const int notification_bg = 2130837588;
+			public const int notification_action_background = 2130837588;
 			
 			// aapt resource value: 0x7f020055
-			public const int notification_bg_low = 2130837589;
+			public const int notification_bg = 2130837589;
 			
 			// aapt resource value: 0x7f020056
-			public const int notification_bg_low_normal = 2130837590;
+			public const int notification_bg_low = 2130837590;
 			
 			// aapt resource value: 0x7f020057
-			public const int notification_bg_low_pressed = 2130837591;
+			public const int notification_bg_low_normal = 2130837591;
 			
 			// aapt resource value: 0x7f020058
-			public const int notification_bg_normal = 2130837592;
+			public const int notification_bg_low_pressed = 2130837592;
 			
 			// aapt resource value: 0x7f020059
-			public const int notification_bg_normal_pressed = 2130837593;
+			public const int notification_bg_normal = 2130837593;
 			
 			// aapt resource value: 0x7f02005a
-			public const int notification_icon_background = 2130837594;
-			
-			// aapt resource value: 0x7f02005d
-			public const int notification_template_icon_bg = 2130837597;
-			
-			// aapt resource value: 0x7f02005e
-			public const int notification_template_icon_low_bg = 2130837598;
+			public const int notification_bg_normal_pressed = 2130837594;
 			
 			// aapt resource value: 0x7f02005b
-			public const int notification_tile_bg = 2130837595;
+			public const int notification_icon_background = 2130837595;
+			
+			// aapt resource value: 0x7f02005e
+			public const int notification_template_icon_bg = 2130837598;
+			
+			// aapt resource value: 0x7f02005f
+			public const int notification_template_icon_low_bg = 2130837599;
 			
 			// aapt resource value: 0x7f02005c
-			public const int notify_panel_notification_icon_bg = 2130837596;
+			public const int notification_tile_bg = 2130837596;
+			
+			// aapt resource value: 0x7f02005d
+			public const int notify_panel_notification_icon_bg = 2130837597;
 			
 			static Drawable()
 			{
@@ -1756,6 +1759,9 @@ namespace VolleyRank
 			// aapt resource value: 0x7f0b0022
 			public const int bottom = 2131427362;
 			
+			// aapt resource value: 0x7f0b0057
+			public const int button = 2131427415;
+			
 			// aapt resource value: 0x7f0b002e
 			public const int buttonPanel = 2131427374;
 			
@@ -1765,11 +1771,11 @@ namespace VolleyRank
 			// aapt resource value: 0x7f0b003e
 			public const int checkbox = 2131427390;
 			
-			// aapt resource value: 0x7f0b006f
-			public const int child_label = 2131427439;
+			// aapt resource value: 0x7f0b0071
+			public const int child_label = 2131427441;
 			
-			// aapt resource value: 0x7f0b0070
-			public const int child_value = 2131427440;
+			// aapt resource value: 0x7f0b0072
+			public const int child_value = 2131427442;
 			
 			// aapt resource value: 0x7f0b0064
 			public const int chronometer = 2131427428;
@@ -1873,8 +1879,8 @@ namespace VolleyRank
 			// aapt resource value: 0x7f0b0030
 			public const int parentPanel = 2131427376;
 			
-			// aapt resource value: 0x7f0b0072
-			public const int points = 2131427442;
+			// aapt resource value: 0x7f0b0074
+			public const int points = 2131427444;
 			
 			// aapt resource value: 0x7f0b0005
 			public const int progress_circular = 2131427333;
@@ -1885,11 +1891,11 @@ namespace VolleyRank
 			// aapt resource value: 0x7f0b0040
 			public const int radio = 2131427392;
 			
-			// aapt resource value: 0x7f0b0057
-			public const int ranking_list = 2131427415;
+			// aapt resource value: 0x7f0b0070
+			public const int ranking_list = 2131427440;
 			
-			// aapt resource value: 0x7f0b0073
-			public const int ranking_list1 = 2131427443;
+			// aapt resource value: 0x7f0b0075
+			public const int ranking_list1 = 2131427445;
 			
 			// aapt resource value: 0x7f0b0066
 			public const int right_icon = 2131427430;
@@ -1957,6 +1963,9 @@ namespace VolleyRank
 			// aapt resource value: 0x7f0b002f
 			public const int spacer = 2131427375;
 			
+			// aapt resource value: 0x7f0b0056
+			public const int spinner = 2131427414;
+			
 			// aapt resource value: 0x7f0b0007
 			public const int split_action_bar = 2131427335;
 			
@@ -1978,14 +1987,14 @@ namespace VolleyRank
 			// aapt resource value: 0x7f0b0052
 			public const int submit_area = 2131427410;
 			
-			// aapt resource value: 0x7f0b0056
-			public const int swipe_container = 2131427414;
+			// aapt resource value: 0x7f0b006f
+			public const int swipe_container = 2131427439;
 			
 			// aapt resource value: 0x7f0b000b
 			public const int tabMode = 2131427339;
 			
-			// aapt resource value: 0x7f0b0071
-			public const int team = 2131427441;
+			// aapt resource value: 0x7f0b0073
+			public const int team = 2131427443;
 			
 			// aapt resource value: 0x7f0b006d
 			public const int text = 2131427437;
@@ -2197,25 +2206,28 @@ namespace VolleyRank
 			public const int notification_template_part_time = 2130968618;
 			
 			// aapt resource value: 0x7f04002b
-			public const int RankingListExpandItem = 2130968619;
+			public const int Ranking = 2130968619;
 			
 			// aapt resource value: 0x7f04002c
-			public const int RankingListItem = 2130968620;
+			public const int RankingListExpandItem = 2130968620;
 			
 			// aapt resource value: 0x7f04002d
-			public const int Rankings = 2130968621;
+			public const int RankingListItem = 2130968621;
 			
 			// aapt resource value: 0x7f04002e
-			public const int select_dialog_item_material = 2130968622;
+			public const int Rankings = 2130968622;
 			
 			// aapt resource value: 0x7f04002f
-			public const int select_dialog_multichoice_material = 2130968623;
+			public const int select_dialog_item_material = 2130968623;
 			
 			// aapt resource value: 0x7f040030
-			public const int select_dialog_singlechoice_material = 2130968624;
+			public const int select_dialog_multichoice_material = 2130968624;
 			
 			// aapt resource value: 0x7f040031
-			public const int support_simple_spinner_dropdown_item = 2130968625;
+			public const int select_dialog_singlechoice_material = 2130968625;
+			
+			// aapt resource value: 0x7f040032
+			public const int support_simple_spinner_dropdown_item = 2130968626;
 			
 			static Layout()
 			{

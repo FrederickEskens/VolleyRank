@@ -110,9 +110,13 @@
   <ItemGroup>
     <Compile Include="Adapters\ExpandableListAdapter.cs" />
     <Compile Include="Adapters\RankingAdapter.cs" />
+    <Compile Include="Database\Models\Preference.cs" />
     <Compile Include="Database\VolleyRankDatabase.cs" />
     <Compile Include="Database\Models\CacheItem.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Models\Serie.cs" />
+    <Compile Include="Models\Series.cs" />
+    <Compile Include="RankingActivity.cs" />
     <Compile Include="Models\Ranking.cs" />
     <Compile Include="Models\Standing.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -128,6 +132,9 @@
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\RankingListExpandItem.axml" />
+    <AndroidResource Include="Resources\layout\Ranking.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">
@@ -135,9 +142,7 @@
     </AndroidResource>
     <AndroidResource Include="Resources\values\Strings.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\drawable\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <AndroidAsset Include="Assets\testdata.xml" />
   </ItemGroup>
@@ -176,6 +181,9 @@
       <Visible>False</Visible>
       <Version>1.0.11</Version>
     </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\custom_button.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Compat.25.4.0.2\build\MonoAndroid70\Xamarin.Android.Support.Compat.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Compat.25.4.0.2\build\MonoAndroid70\Xamarin.Android.Support.Compat.targets')" />

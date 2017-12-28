@@ -67,5 +67,31 @@ namespace VolleyRank.Database
 
             return result;
         }
+
+        public string GetPreference(string key)
+        {
+            UserPreference result;
+            using (var conn = new SQLiteConnection(dbPath))
+            {
+                result = conn.Query<UserPreference>($"select * from preferences where key = '{key}'").FirstOrDefault();
+            }
+
+            return result?.Value;
+        }
+
+        public void SavePreference(string key, string value)
+        {
+            using (var conn = new SQLiteConnection(dbPath))
+            {
+                if (GetPreference(key) == null)
+                {
+                    conn.Query<CacheItem>(
+                        $"insert into preferences (key, value) values ('{key}', '{value}')");
+                }
+
+                conn.Query<UserPreference>(
+                    $"update preferences set value='{value}' where key='{key}'");
+            }
+        }
     }
 }
