@@ -38,20 +38,15 @@ namespace VolleyRank
 
             var button = FindViewById<Button>(Resource.Id.button);
 
-            button.Click += (o, e) => {
-                var activity2 = new Intent(this, typeof(RankingActivity));
-                activity2.PutExtra("seriesCode", selectedSerieCode);
-                StartActivity(activity2);
-            };
-
             series = GetSeries("AH-2180").SerieList.Where(x => x.Type == "punten").ToList();
             seriesNames = series.OrderBy(x => x.Name).Select(x => x.Name).ToList();
-            SetPreselectedSerie();
 
             var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, seriesNames);
             spinner.Adapter = adapter;
+            SetPreselectedSerie();
 
             spinner.ItemSelected += spinner_ItemSelected;
+            button.Click += button_Clicked;
         }
 
         private void SetPreselectedSerie()
@@ -94,7 +89,14 @@ namespace VolleyRank
         {
             var selectedSerie = series.FirstOrDefault(x => x.Name == seriesNames[e.Position]);
             selectedSerieCode = selectedSerie?.Code;
+        }
+
+        private void button_Clicked(object sender, EventArgs e)
+        {
+            var rankingActivity = new Intent(this, typeof(RankingActivity));
+            rankingActivity.PutExtra("seriesCode", selectedSerieCode);
             database.SavePreference("last_selected_serie", selectedSerieCode);
+            StartActivity(rankingActivity);
         }
     }
 }
