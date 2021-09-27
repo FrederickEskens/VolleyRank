@@ -6,7 +6,7 @@ namespace VolleyRank.Utilities
 {
     public static class XmlConvert
     {
-        public static T Deserialze<T>(Stream stream)
+        public static T Deserialize<T>(Stream stream)
         {
             var serializer = new XmlSerializer(typeof(T));
             var reader = new StreamReader(stream);
@@ -17,15 +17,12 @@ namespace VolleyRank.Utilities
             return result;
         }
 
-        public static T Deserialze<T>(string input)
+        public static T Deserialize<T>(string input)
         {
             var serializer = new XmlSerializer(typeof(T));
 
-            T result;
-            using (TextReader reader = new StringReader(input))
-            {
-                result = (T)serializer.Deserialize(reader);
-            }
+            using TextReader reader = new StringReader(input);
+            var result = (T)serializer.Deserialize(reader);
 
             return result;
         }
@@ -36,14 +33,10 @@ namespace VolleyRank.Utilities
 
             string xml;
 
-            using (var sw = new StringWriter())
-            {
-                using (var writer = XmlWriter.Create(sw))
-                {
-                    serializer.Serialize(writer, standing);
-                    xml = sw.ToString();
-                }
-            }
+            using var sw = new StringWriter();
+            using var writer = XmlWriter.Create(sw);
+            serializer.Serialize(writer, standing);
+            xml = sw.ToString();
 
             return xml;
         }

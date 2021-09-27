@@ -2,11 +2,8 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
-
 using Android.App;
-
 using SQLite;
-
 using VolleyRank.Database.Models;
 
 namespace VolleyRank.Database
@@ -23,20 +20,15 @@ namespace VolleyRank.Database
 
         private void CreateDatabase()
         {
-            if (!File.Exists(dbPath))
+            if (File.Exists(dbPath)) return;
+            using var br = new BinaryReader(Application.Context.Assets.Open(DbName));
+            using var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create));
+
+            var buffer = new byte[2048];
+            int len;
+            while ((len = br.Read(buffer, 0, buffer.Length)) > 0)
             {
-                using (var br = new BinaryReader(Application.Context.Assets.Open(DbName)))
-                {
-                    using (var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create)))
-                    {
-                        byte[] buffer = new byte[2048];
-                        int len;
-                        while ((len = br.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            bw.Write(buffer, 0, len);
-                        }
-                    }
-                }
+                bw.Write(buffer, 0, len);
             }
         }
 
@@ -44,26 +36,19 @@ namespace VolleyRank.Database
         {
             var timestamp = DateTime.Now.ToString(CultureInfo.InvariantCulture);
 
-            using (var conn = new SQLiteConnection(dbPath))
+            using var conn = new SQLiteConnection(dbPath);
+            if (GetStandingFromCache(key) == null)
             {
-                if (GetStandingFromCache(key) == null)
-                {
-                    conn.Query<CacheItem>(
-                        $"insert into cache (key, xml, timestamp) values ('{key}', '{xml}', '{timestamp}')");
-                }
-
-                conn.Query<CacheItem>(
-                    $"update cache set xml='{xml}', timestamp='{timestamp}' where key='{key}'");
+                conn.Query<CacheItem>($"insert into cache (key, xml, timestamp) values ('{key}', '{xml}', '{timestamp}')");
             }
+
+            conn.Query<CacheItem>($"update cache set xml='{xml}', timestamp='{timestamp}' where key='{key}'");
         }
 
         public CacheItem GetStandingFromCache(string key)
         {
-            CacheItem result;
-            using (var conn = new SQLiteConnection(dbPath))
-            {
-                result = conn.Query<CacheItem>($"select * from cache where key = '{key}'").FirstOrDefault();
-            }
+            using var conn = new SQLiteConnection(dbPath);
+            var result = conn.Query<CacheItem>($"select * from cache where key = '{key}'").FirstOrDefault();
 
             return result;
         }
@@ -81,17 +66,13 @@ namespace VolleyRank.Database
 
         public void SavePreference(string key, string value)
         {
-            using (var conn = new SQLiteConnection(dbPath))
+            using var conn = new SQLiteConnection(dbPath);
+            if (GetPreference(key) == null)
             {
-                if (GetPreference(key) == null)
-                {
-                    conn.Query<CacheItem>(
-                        $"insert into preferences (key, value) values ('{key}', '{value}')");
-                }
-
-                conn.Query<UserPreference>(
-                    $"update preferences set value='{value}' where key='{key}'");
+                conn.Query<CacheItem>($"insert into preferences (key, value) values ('{key}', '{value}')");
             }
+
+            conn.Query<UserPreference>($"update preferences set value='{value}' where key='{key}'");
         }
     }
 }

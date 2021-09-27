@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-
 using Android.App;
 using Android.Net;
 using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Widget;
-
 using VolleyRank.Adapters;
 using VolleyRank.Models;
 using VolleyRank.Utilities;
@@ -18,13 +16,9 @@ namespace VolleyRank
     {
         private ExpandableListAdapter rankingAdapter;
         private ExpandableListView rankingListView;
-
         private SwipeRefreshLayout swipeLayout;
-
         private Standing data;
-
         private ConnectivityManager connectivityManager;
-
         private Toast toast;
             
         protected override void OnCreate(Bundle savedInstanceState)

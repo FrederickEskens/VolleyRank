@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-
 using Android.App;
 using Android.Views;
 using Android.Widget;
-
 using Java.Lang;
-
 using VolleyRank.Models;
 using VolleyRank.Utilities;
 

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Android.App;
 using Android.Content;
 using Android.Net;
 using Android.OS;
 using Android.Widget;
-
 using VolleyRank.Database;
 using VolleyRank.Models;
 using VolleyRank.Utilities;
