@@ -20,7 +20,11 @@ namespace VolleyRank.Database
 
         private void CreateDatabase()
         {
-            if (File.Exists(dbPath)) return;
+            if (File.Exists(dbPath))
+            {
+                return;
+            }
+
             using var br = new BinaryReader(Application.Context.Assets.Open(DbName));
             using var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create));
 

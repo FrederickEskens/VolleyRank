@@ -36,7 +36,7 @@ namespace VolleyRank.Adapters
 
         public override View GetChildView(int groupPosition, int childPosition, bool isLastChild, View convertView, ViewGroup parent)
         {
-            convertView = convertView ?? context.LayoutInflater.Inflate(Resource.Layout.RankingListExpandItem, null);
+            convertView ??= context.LayoutInflater.Inflate(Resource.Layout.RankingListExpandItem, null);
 
             var child = rankingList[groupPosition].ExtraInfo[childPosition];
             var label = child.Split('_')[0];
@@ -51,6 +51,7 @@ namespace VolleyRank.Adapters
         public override Object GetGroup(int groupPosition)
         {
             var ranking = rankingList[groupPosition];
+
             return $"{ranking.Position} {ranking.TeamName.ToTitleCase()}";
         }
 
@@ -61,7 +62,7 @@ namespace VolleyRank.Adapters
 
         public override View GetGroupView(int groupPosition, bool isExpanded, View convertView, ViewGroup parent)
         {
-            convertView = convertView ?? context.LayoutInflater.Inflate(Resource.Layout.RankingListItem, null);
+            convertView ??= context.LayoutInflater.Inflate(Resource.Layout.RankingListItem, null);
 
             var ranking = rankingList[groupPosition];
 
