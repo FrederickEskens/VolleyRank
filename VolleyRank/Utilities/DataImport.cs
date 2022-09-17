@@ -13,7 +13,12 @@ namespace VolleyRank.Utilities
         {
             var url = $"https://www.volleyadmin2.be/services/rangschikking_xml.php?province_id=1&reeks={league}&wedstrijd=Hoofd";
 
-            using var httpClient = new HttpClient();
+            var clientHandler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+            };
+
+            using var httpClient = new HttpClient(clientHandler);
             httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
             httpClient.Timeout = TimeSpan.FromSeconds(5);
             var response = httpClient.GetStringAsync(new Uri(url)).Result;
@@ -29,7 +34,12 @@ namespace VolleyRank.Utilities
         {
             var url = $"https://www.volleyadmin2.be/services/rangschikking_xml.php?province_id=1&reeks={league}&wedstrijd=Hoofd";
 
-            using var httpClient = new HttpClient();
+            var clientHandler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+            };
+
+            using var httpClient = new HttpClient(clientHandler);
             httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
             httpClient.Timeout = TimeSpan.FromSeconds(5);
             var response = await httpClient.GetStringAsync(new Uri(url));
@@ -65,6 +75,13 @@ namespace VolleyRank.Utilities
         {
             var database = new VolleyRankDatabase();
             var cacheItem = database.GetStandingFromCache($"{cacheId}_{id}");
+            if (cacheItem == null)
+            {
+                cacheTimeStamp = DateTime.Now;
+
+                return default;
+            }
+
             var xml = cacheItem.Xml;
             cacheTimeStamp = DateTime.Parse(cacheItem.TimeStamp, CultureInfo.InvariantCulture);
 
@@ -75,7 +92,12 @@ namespace VolleyRank.Utilities
         {
             var url = $"https://www.volleyadmin2.be/services/series_xml.php?stamnummer={clubId}";
 
-            using var httpClient = new HttpClient();
+            var clientHandler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+            };
+
+            using var httpClient = new HttpClient(clientHandler);
             httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
             httpClient.Timeout = TimeSpan.FromSeconds(5);
             var response = httpClient.GetStringAsync(new Uri(url)).Result;

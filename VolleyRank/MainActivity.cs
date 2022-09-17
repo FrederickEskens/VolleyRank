@@ -74,8 +74,9 @@ namespace VolleyRank
                 {
                     result = DataImport.GetSeriesFromWebService(clubId);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    var message = e.Message;
                     result = DataImport.GetSeriesFromCache(clubId, out var timeStamp);
                 }
             }
